@@ -30,4 +30,4 @@
 ## 6. class
 
 - class란?
-- class 다중상속 구현하기
+- class 다중상속 구현하
