@@ -43,7 +43,7 @@
     }
     sum(3, 4);
     
-# 함수스코프, 실행컨텍스트 (function scope, execution context)
+# 2-3. 함수스코프, 실행컨텍스트 (function scope, execution context)
 
 스코프 : 유효범위(변수)
 
@@ -71,3 +71,24 @@
     outer();
     console.log(a);
     
+# 2-4. 메소드(method)
+
+함수처럼 생겼는데 .이 붙으면 메소드
+
+    var obj = {
+        a: 1,
+        b: function bb() {
+            console.log(this);
+        },
+        c: function() {
+            console.log(this.a);
+        }
+    };
+    
+    obj.b();
+    obj.c();
+    
+    console.log(obj.b);
+    console.log(obj.c);
+    
+메소드는 this를 바인딩함
