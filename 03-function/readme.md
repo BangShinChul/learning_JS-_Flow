@@ -92,3 +92,75 @@
     console.log(obj.c);
     
 메소드는 this를 바인딩함
+
+# 2-5. 콜백함수(callback function)
+
+something will call this function back sometime somehow.
+
+제어권을 넘겨준다. 맡긴다.
+
+    setTnterval(function(){
+        console.log('1초마다 실행될 겁니다.');
+    }, 1000);
+    
+만약 콜백함수를 변수로 치환하면 아래와 같아집니다.
+
+    var cb = function() {
+        console.log('1초마다 실행될 겁니다.');
+    };
+    
+    setTnterval(cb, 1000);
+    
+setInterval 함수는 아래와 같이 정의되어 있음
+   
+    setInterval(callback, milliseconds)
+    
+다른 예제
+
+    var arr = [1, 2, 3, 4, 5];
+    var entries = [];
+    arr.forEach(function(v, i){
+        entries.push([i, v, this[i]]);
+    }, [10, 20, 30, 40, 50]);
+    console.log(entries);
+    
+결과는 아래와 같이 나오게 됩니다.
+
+    [[0,1,10],[1,2,20],[2,3,30],[3,4,40],[4,5,50]]
+    
+ForEach 구현
+
+    Array.prototype.forEach = function(callback, thisArg) {
+        var self = thisArg || this;
+        for(var i = 0;i < this.length; i++) {
+            callback.call(self,this[i], i, this)
+        }
+    }
+    
+콜백함수는 정해진 파라미터 규칙을 따라야함
+
+    document.body.innerHTML = '<div id="a">abc</div>'
+    function cbFunc(x) {
+        console.log(this, x);
+    }
+    
+    document.getElementById('a')
+        .addEventListener('click', cbFunc);
+        
+    $('#a').on('click', cbFunc);
+    
+결과는 다음과 같이 나오게 됩니다.
+
+    <div id="a">abc</div>
+    MouseEvent {isTrusted:true, screenX:11, ...
+    
+addEventListener(type, callback, options)
+
+
+## 콜백함수의 특징
+
+- 다른 함수(A)의 매개변수로 콜백함수(B)를 전달하면, A가 B의 제어권을 갖게 됩니다.
+- 특별한 요청(bind)이 없는 한 A에 미리 정해진 방식에 따라 B를 호출합니다.
+- 미리 정해진 방식이란 this에 무엇을 바인딩할지, 매개변수에는 어떤 값들을 지정할지, 어떤 타이밍에 콜백을 호출할지 등이다.
+
+주의! 콜백은 '함수'다
