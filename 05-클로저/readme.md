@@ -101,3 +101,42 @@ return function : scope 및 lexical environment는 변하지 않는다.<br>
 5. 반환된 익명함수를 변수 count에 할당
 6. count 실행
 7. 익명함수 스코프에서 count 탐색 -> setCounter 스코프에서 count 탐색 -> count에 1을 증가시킨 값을 반환
+
+# 지역변수 만들기
+
+closure로 private member 만들기
+
+    var car = {
+        fuel: 10,   // 연료 (l)
+        power: 2,    // 연료 ( km / l )
+        total: 0,
+        run: function(km) {
+            var wasteFuel = km / this.power;
+            if(this.fuel < wasteFuel) {
+                console.log('이동 불가');
+                return;
+            }
+            this.fuel -= wasteFuel;
+            this.total += km;
+        }
+    };
+    
+변경
+
+    var createCar = function (f, p) {
+        var fuel = f;
+        var power = p;
+        var total = 0;
+        return {
+            run : function(km) {
+                var wasteFuel = km / power;
+                if( fuel < wasteFuel ) {
+                    console.log('이동 불가');
+                    return;
+                }
+                fuel -= wasteFuel;
+                total += km;
+            }
+        }
+    };
+    var car = createCar(10, 2);
