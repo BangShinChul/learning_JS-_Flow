@@ -140,3 +140,10 @@ closure로 private member 만들기
         }
     };
     var car = createCar(10, 2);
+    
+1. 함수에서 지역변수 및 내부함수 등을 생성한다.
+2. 외부에 노출시키고자 하는 멤버들로 구성된 객체를 return한다. -> return한 객체에 포함되지 않는 멤버들은 private하다. -> return한 객체에 포함된 멤버들은 public하다
+
+return function 최초 선언시의 정보를 유지!
+
+접근 권한 제어, 지역변수 보호, 데이터 보존 및 활용
