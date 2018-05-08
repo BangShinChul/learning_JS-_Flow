@@ -53,3 +53,49 @@
     [instance].constructor
     
 위의 다섯가지방법으로 생성자 함수에 접근가능
+
+# 5-2. 메소드 상속 및 동작 원리
+
+    function Person(n, a) {
+        this.name = n;
+        this.age = a;
+    }
+    
+    var gomu = new Person('고무곰', 30);
+    var iu = new Person('아이유', 25);
+    
+    gomu.setOlder = function() {
+        this.age += 1;
+    }
+    gomu.getAge = function() {
+        return this.age;
+    }
+    iu.setOlder = function() {
+        this.age += 1;
+    }
+    iu.getAge = function() {
+       return this.age;
+    }
+   
+프로토타입으로 변경 후
+
+    function Person(n, a) {
+        this.name = n;
+        this.age = a;
+    }
+    Person.prototype.setOlder = function() {
+        this.age += 1;
+    }
+    Person.prototype.getAge = function() {
+        return this.age;
+    }
+    
+    var gomu = new Person('고무곰', 30);
+    var iu = new Person('아이유', 25);
+    
+    Person.prototype.age = 100;
+    gomu.__proto__.setOlder();
+    gomu.__proto__.getAge();    // 101
+    
+    gomu.setOlder();
+    gomu.getAge();  // 31
