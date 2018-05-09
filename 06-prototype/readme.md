@@ -99,3 +99,141 @@
     
     gomu.setOlder();
     gomu.getAge();  // 31
+    
+# 5-3. PROTOTYPE CHAINING
+
+![Alt text](prototype_chaining.png)
+
+Object.prototype에는 hasOwnProperty(), toString(), valueOf(), isPrototypeOf() 등이 정의되어 있음.
+
+string, number 등등 모든 메서드들이 객체 프로토타입을 상속받으므로 객체의 속성을 따로 주도록 함
+
+Object -> assign(), freeze(), create(), values(), keys()
+
+프로토타입 체이닝 예제 0
+
+    var arr = [1, 2, 3];
+    
+    console.log(arr.toString());    // 1,2,3
+    
+프로토타입 체이닝 예제 1
+
+    var arr = [1, 2, 3];
+    arr.toString = function() {
+        return this.join('_');
+    }
+    
+    console.log(arr.toString());    // 1_2_3
+    
+프로토타입 체이닝 예제 2
+    
+    var arr = [1, 2, 3];
+    arr.toString = function() {
+        return this.join('_');
+    }
+        
+    console.log(arr.toString());    // 1_2_3
+    
+    console.log(arr.__proto__.toString.call(arr));      // 1,2,3
+    
+    console.log(arr.__proto__.__proto__.toString.call(arr));    // [Object Array]
+
+프로토타입 체이닝 예제 3
+    
+    var arr = [1, 2, 3];
+    Array.prototype.toString = function() {
+        return '[' + this.join(', ') + ']';
+    }
+        
+    console.log(arr.toString());    // [1, 2, 3]
+    
+    console.log(arr.__proto__.toString.call(arr));      // [1, 2, 3]
+    
+    console.log(arr.__proto__.__proto__.toString.call(arr));    // [Object Array]
+    
+프로토타입 체이닝 예제 4
+
+    var obj = {
+        a: 1,
+        b: {
+            c: 'c'
+        }
+    };
+    console.log(obj.toString());    // [object Object]
+    
+    
+프로토타입 체이닝 예제 5
+
+    var obj = {
+        a: 1,
+        b: {
+            c: 'c'
+        },
+        toString: function() {
+            var res = [];
+            for(var key in this) {
+                res.push(key + ': ' + this[key].toString());
+            }
+            return '{' + res.join(', ') + '}';
+        }
+    };
+    console.log(obj.toString());
+    
+    // result
+    
+    {a: 1, b: [object Object], toString: function () {
+        var res = [];
+        for(var key in this) {
+            res.push(key + ': ' + this[key].toString());
+        }
+        return '{' + res.join(', ') + '}';
+    }}
+
+    
+프로토타입 체이닝 예제 6
+
+    var obj = {
+        a: 1,
+        b: {
+            c: 'c'
+        }
+    };
+        
+    Object.prototype.toString = function() {
+        var res = [];
+        for(var key in this) {
+            res.push(key + ': ' + this[key].toString());
+        }
+        return '{' + res.join(', ') + '}';
+    }
+    
+    console.log(obj.toString());    // {a: 1, b: {c: c}}
+    
+프로토타입 체이닝 예제 7
+
+    var obj = {
+        a: 1,
+        b: {
+            c: 'c'
+        },
+        d: [5, 6, 7],
+        e: function(){}
+    };
+    
+    Object.prototype.toString = function() {
+        var res = [];
+        for(var key in this) {
+            res.push(key + ': ' + this[key].toString());
+            }
+        return '{' + res.join(', ') + '}';
+    }
+    
+    Array.prototype.toString = function() {
+        return '[' + this.join(', ') + ']';
+    }
+    
+    console.log(obj.toString());
+    
+    //  result
+    
+    {a: 1, b: {c: c}, d: [5, 6, 7], e: function (){}}
