@@ -1,0 +1,1 @@
+# 6-1. prototype static 메소드 및 static 프로퍼티
