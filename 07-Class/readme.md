@@ -13,3 +13,33 @@ CLASS(계급. 집단. 집합)
 ![Alt text](class3.png)
 
 ![Alt text](class4.png)
+
+![Alt text](class5.png)
+
+본 강의 예제1
+
+    function Person(name, age) {
+        this._name = name;
+        this._age = age;
+    }
+    Person.getInformations = function(instance) {
+        return {
+            name: instance._name,
+            age: instance._age
+        };
+    }
+    Person.prototype.getName = function() {
+        return this._name;
+    }
+    Person.prototype.getAge = function() {
+        return this._age;
+    }
+    
+    var gomu = new Person('고무', 30);
+    
+    console.log(gomu.getName());    // OK
+    console.log(gomu.getAge());     // OK
+    
+    console.log(gomu.getInformations(gomu));    // Error
+    
+    console.log(Person.getInformations(gomu));  // OK
